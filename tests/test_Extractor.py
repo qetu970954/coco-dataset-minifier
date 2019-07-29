@@ -2,8 +2,7 @@ from utilities.Extractor import Extractor
 
 
 def test_extract():
-    extractor = Extractor()
-    extractor.read_from("tests/resources/coco.names")
+    extractor = Extractor("tests/resources/coco.names")
     extracted_item, remain = extractor.extract(10)
 
     assert len(extracted_item) == 10, "The result doesn't contain 10 categories."

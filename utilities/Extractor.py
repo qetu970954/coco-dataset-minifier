@@ -2,8 +2,9 @@ import random
 
 
 class Extractor:
-    def __init__(self):
+    def __init__(self, filename):
         self._content = dict()
+        self.read_from(filename)
 
     def read_from(self, filename):
         self._content.clear()

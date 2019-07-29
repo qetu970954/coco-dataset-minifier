@@ -1,25 +1,39 @@
-import fnmatch
-import os
+from fnmatch import fnmatch
+from os import listdir
+from pathlib import Path
 from shutil import copyfile
 
-import utilities.Extractor as extractor
-import utilities.LineRemover as remover
+from utilities.CategoryRearranger import CategoryRearranger
+from utilities.Extractor import Extractor
+from utilities.LineRemover import LineRemover
 
-extractor = extractor.Extractor()
-extractor.read_from("coco.names")
+# Extract some categories in coco.names.
+extractor = Extractor("coco.names")
 extracted_item, remains = extractor.extract(70)
 
 with open("mini_coco.names", 'w') as f:
     for name in remains.values():
         print(name, file=f)
 
-new_dict = {idx: value for idx, value in enumerate(remains.values())}
+# Create the environment in order to apply LineRemover
+Path("img/tmp/").mkdir(parents=True, exist_ok=True)
 
+all_text_names = [name for name in listdir("img") if fnmatch(name, '*.txt')]
+for name in all_text_names:
+    copyfile(f"img/{name}", f"img/tmp/{name}")
 
-remover = remover.LineRemover("img/")
+# Use LineRemover to remove all text files' content.
+remover = LineRemover("img/tmp/")
 remover.remove_lines_start_with(extracted_item.keys())
 
-TEXT_FILE_NAMES = [filename for filename in os.listdir("img/rm") if fnmatch.fnmatch(filename, '*.txt')]
-for name in TEXT_FILE_NAMES:
-    IMG_NAME = name[:-3] + "jpg"
-    copyfile(f"img/{IMG_NAME}", f"img/rm/{IMG_NAME}")
+# Rearrange text files
+rearranger = CategoryRearranger(remains.keys(), "img/tmp/")
+rearranger.rearrange()
+
+# Enumerate all of the text file's name
+all_text_names = [filename for filename in listdir("img/tmp/") if fnmatch(filename, '*.txt')]
+
+# Copy the corresponding image from img/ to img/tmp
+img_names = [file_name[:-3] + "jpg" for file_name in all_text_names]
+for name in img_names:
+    copyfile(f"img/{name}", f"img/tmp/{name}")
