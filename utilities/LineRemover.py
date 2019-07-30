@@ -22,7 +22,7 @@ class LineRemover:
         A.txt becomes:
              3 42 2 5 45
              >>EOF
-        Line 1 and Line 3 are removed!
+        Line 1 and Line 3 are removed.
 
         Note: If there is no remaining content in the file, this file will be removed.
 

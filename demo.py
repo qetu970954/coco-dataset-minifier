@@ -9,10 +9,13 @@ from utilities.LineRemover import LineRemover
 
 # Extract some categories in coco.names.
 extractor = Extractor("coco.names")
-extracted_item, remains = extractor.extract(70)
+extracted_items, remains = extractor.extract_specific(
+    ['truck', 'tie', 'sheep', 'dog', 'airplane',
+     'bus', 'suitcase', 'toothbrush', 'sink', 'bench']
+)
 
 with open("mini_coco.names", 'w') as f:
-    for name in remains.values():
+    for name in extracted_items.values():
         print(name, file=f)
 
 # Create the environment in order to apply LineRemover
@@ -24,10 +27,10 @@ for name in all_text_names:
 
 # Use LineRemover to remove all text files' content.
 remover = LineRemover("img/tmp/")
-remover.remove_lines_start_with(extracted_item.keys())
+remover.remove_lines_start_with(remains.keys())
 
 # Rearrange text files
-rearranger = CategoryRearranger(remains.keys(), "img/tmp/")
+rearranger = CategoryRearranger(extracted_items.keys(), "img/tmp/")
 rearranger.rearrange()
 
 # Enumerate all of the text file's name
