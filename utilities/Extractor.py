@@ -2,6 +2,11 @@ import random
 
 
 class Extractor:
+    """
+    Extract some category and it's corresponding index
+
+    :param filename: The file where the category names are stored.
+    """
     def __init__(self, filename):
         self._content = dict()
         self.read_from(filename)

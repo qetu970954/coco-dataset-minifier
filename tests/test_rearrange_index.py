@@ -1,5 +1,5 @@
 from utilities.CategoryRearranger import CategoryRearranger
-from tests.test_setup import setup_working_directory
+
 
 def test_CategoryRearranger(setup_working_directory):
     rearranger = CategoryRearranger([58, 62, 0], "tests/resources/tmp/")

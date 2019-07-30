@@ -2,3 +2,4 @@ img
 .idea
 .pytest_cache
 tmp
+__pycache__

@@ -1,14 +1,21 @@
 import fnmatch
 import os
 
+
 class LineRemover:
+    """
+    Remove lines in a specific directory
+
+    :param remove_path: The path to apply LineRemover. All of the text file in remove_path will be inspected.
+    """
+
     def __init__(self, remove_path):
         self.result = list()
         self.remove_path = remove_path
 
     def remove_lines_start_with(self, start_with: list):
         """
-        Remove lines in the text files start with ${start_with}.
+        Remove lines in the text files start with ${start_with}
 
         e.g.
         Suppose the file, A.txt, has contents:

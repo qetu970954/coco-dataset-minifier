@@ -10,8 +10,18 @@ from utilities.LineRemover import LineRemover
 # Extract some categories in coco.names.
 extractor = Extractor("coco.names")
 extracted_items, remains = extractor.extract_specific(
-    ['truck', 'tie', 'sheep', 'dog', 'airplane',
-     'bus', 'suitcase', 'toothbrush', 'sink', 'bench']
+    [
+        "bird",
+        "cat",
+        "dog",
+        "horse",
+        "sheep",
+        "cow",
+        "elephant",
+        "bear",
+        "zebra",
+        "giraffe",
+    ]
 )
 
 with open("mini_coco.names", 'w') as f:
